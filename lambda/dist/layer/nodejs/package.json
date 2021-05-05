@@ -1,0 +1,35 @@
+{
+  "name": "applications",
+  "version": "1.0.0",
+  "description": "",
+  "main": "validate.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "lint": "eslint ./ --fix",
+    "test:dev": "newman run tests/api.postman_collection.json -e tests/api-enviroment-dev.postman_environment.json",
+    "validate:dev": "cross-env STAGE=dev node validate.js",
+    "test:prod": "newman run tests/api.postman_collection.json -e tests/api-enviroment-prod.postman_environment.json",
+    "validate:prod": "cross-env STAGE=prod node validate.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.x",
+    "lambda-local": "^1.6",
+    "newman": "^4.x",
+    "node-fetch": "^2.x",
+    "pino": "^6.7.0",
+    "shortid": "^2.x",
+    "swagger-parser": "^8.x"
+  },
+  "devDependencies": {
+    "cross-env": "^6.x",
+    "babel-eslint": "^10.x",
+    "eslint": "^5.x",
+    "eslint-config-airbnb-base": "^13.x",
+    "eslint-plugin-import": "^2.x",
+    "eslint-plugin-security": "^1.x"
+  },
+  "author": "",
+  "license": "ISC"
+}

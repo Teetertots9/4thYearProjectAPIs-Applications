@@ -1,0 +1,17 @@
+{
+  "name": "api-authorizer",
+  "version": "1.0.0",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Stephen Kelly <stephen.kelly@traveltechlabs.com>",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "jsonwebtoken": "^8.5",
+    "jwk-to-pem": "^2.x",
+    "request": "^2.88"
+  }
+}

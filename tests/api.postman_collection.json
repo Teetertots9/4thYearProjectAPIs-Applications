@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "492b63f1-9d23-4d6b-97a9-d42cbfd346cf",
+		"name": "applications-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "applications",
+			"item": [
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "784e8b33-7015-4a6a-a3f5-efe52edaccab",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code should equal 200\"] = responseCode.code === 200;",
+									"tests[\"Should not return error message\"] = jsonData.errorMessage === undefined;",
+									"tests[\"Should return an AuthenticationResult\"] = jsonData.AuthenticationResult !== undefined;",
+									"tests[\"Should return an AccessToken\"] = jsonData.AuthenticationResult.AccessToken !== undefined;",
+									"tests[\"Should return an RefreshToken\"] = jsonData.AuthenticationResult.RefreshToken !== undefined;",
+									"tests[\"Should return an IdToken\"] = jsonData.AuthenticationResult.IdToken !== undefined;",
+									"postman.setEnvironmentVariable(\"id-token\", jsonData.AuthenticationResult.IdToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"{{tester-username}}\",\r\n  \"password\": \"{{tester-password}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{auth-api}}/users/authenticate",
+							"host": [
+								"{{auth-api}}"
+							],
+							"path": [
+								"users",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "853b6d14-2e70-4de6-afce-04687d82142a",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code should equal 200\"] = responseCode.code === 200;",
+									"tests[\"Should not return error message\"] = jsonData.errorMessage === undefined;",
+									"tests[\"Should return applications array\"] = jsonData.Items !== undefined;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{id-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api}}/application",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d004bb1a-c7f3-42c0-8d7e-373ff412d08e",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code should equal 200\"] = responseCode.code === 200;",
+									"tests[\"Should not return error message\"] = jsonData.errorMessage === undefined;",
+									"postman.setEnvironmentVariable(\"application-id\", jsonData.Item.applicationId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{id-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"artistName\": \"{{name}}\",\r\n\"applicationHook\": \"{{application}}\",\r\n\"artistId\": \"{{artist}}\",\r\n\"eventId\": \"{{eventId}}\",\r\n\"soundFileName\": \"{{file-name}}\",\r\n\"soundFile\": \"{{file}}\",\r\n\"createdBy\": \"{{username}}\",\r\n\"artistImage\": \"{{image}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{api}}/applications",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bad78c5d-4bee-42f4-9bd4-d8e9c92e1b12",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code should equal 200\"] = responseCode.code === 200;",
+									"tests[\"Should not return error message\"] = jsonData.errorMessage === undefined;",
+									"tests[\"Should return an item\"] = jsonData.Item !== undefined;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{id-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api}}/applications/{{application-id}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"applications",
+								"{{application-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecef9d5d-b737-4b12-bfb1-da26a6ff9696",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code should equal 200\"] = responseCode.code === 200;",
+									"tests[\"Should not return error message\"] = jsonData.errorMessage === undefined;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{id-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"artistName\": \"{{name}}\",\r\n\"applicationHook\": \"{{applicationU}}\",\r\n\"artistId\": \"{{artist}}\",\r\n\"eventId\": \"{{eventId}}\",\r\n\"soundFileName\": \"{{file-name}}\",\r\n\"soundFile\": \"{{file}}\",\r\n\"createdBy\": \"{{username}}\",\r\n\"artistImage\": \"{{image}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{api}}/applications/{{application-id}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"applications",
+								"{{application-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "794b2433-a1fc-4f18-a77a-8b270347ebdf",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code should equal 200\"] = responseCode.code === 200;",
+									"tests[\"Should not return error message\"] = jsonData.errorMessage === undefined;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{id-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api}}/applications/{{application-id}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"applications",
+								"{{application-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for applications"
+		}
+	]
+}
